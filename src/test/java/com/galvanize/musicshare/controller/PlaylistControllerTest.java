@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -17,7 +18,7 @@ public class PlaylistControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void createPlaylist() throws Exception {
+    public void createPlaylistReturnsEmptyList() throws Exception {
         mockMvc.perform(
                 post("/api/v1/playlist"))
                 .andExpect(status().isOk());
