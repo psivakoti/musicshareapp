@@ -1,12 +1,14 @@
 package com.galvanize.musicshare.service;
 import com.galvanize.musicshare.entity.Playlist;
 import com.galvanize.musicshare.entity.PlaylistSongMapping;
+import com.galvanize.musicshare.repository.PlaylistRepository;
 import com.galvanize.musicshare.repository.PlaylistSongMappingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,9 @@ class PlaylistServiceTest {
     @Mock
     private PlaylistSongMappingRepository playlistSongMappingRepository;
 
+    @Mock
+    PlaylistRepository playlistRepository;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -31,7 +36,10 @@ class PlaylistServiceTest {
 
     @Test
     public void createPlaylist_Success() {
-        Playlist playlist = playlistService.createPlaylist();
+        Playlist playlistExpected = new Playlist();
+        playlistExpected.setPlaylistName("My Playlist");
+        when(playlistRepository.save(playlistExpected)).thenReturn(playlistExpected);
+        Playlist playlist = playlistService.createPlaylist("My Playlist");
        assertNotNull(playlist);
     }
 
@@ -46,4 +54,5 @@ class PlaylistServiceTest {
 
         assertEquals(1, playlistService.addSongToPlayList("workout", "It is good"));
     }
+
 }

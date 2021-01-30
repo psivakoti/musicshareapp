@@ -19,9 +19,9 @@ public class PlaylistController {
 
     private PlaylistService playlistService;
 
-    @PostMapping
-    public Playlist createPlaylist() {
-        return new Playlist();
+    @PostMapping("/{name}")
+    public Playlist createPlaylist(@PathVariable String name) {
+        return playlistService.createPlaylist(name);
     }
 
     @PutMapping("/{playlistName}/song/{songName}")
