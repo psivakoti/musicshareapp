@@ -1,4 +1,4 @@
-package entity;
+package com.galvanize.musicshare.entity;
 
 import lombok.Data;
 

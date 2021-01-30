@@ -1,4 +1,4 @@
-package entity;
+package com.galvanize.musicshare.entity;
 
 import lombok.Data;
 
@@ -8,9 +8,10 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class Song {
+public class PlaylistSongMapping {
     @Id
     @GeneratedValue
-    private Long songId;
+    private Long id;
+    private String playlistName;
     private String songName;
 }
