@@ -26,7 +26,7 @@ public class PlayListControllerUnitTest {
 
     //put /playlist/{playlist_id}/song/{song_id} 201
     @Test
-    public void addSongToPlayList() throws Exception {
+    public void addSongToEmptyPlayList_returnCountAsOne() throws Exception {
 
         when(playlistService.addSongToPlayList(anyString(), anyString())).thenReturn(1);
 
