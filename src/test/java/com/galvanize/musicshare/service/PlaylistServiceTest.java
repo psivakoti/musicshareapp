@@ -39,8 +39,9 @@ class PlaylistServiceTest {
         Playlist playlistExpected = new Playlist();
         playlistExpected.setPlaylistName("My Playlist");
         when(playlistRepository.save(playlistExpected)).thenReturn(playlistExpected);
-        Playlist playlist = playlistService.createPlaylist("My Playlist");
+        Playlist playlist = playlistService.createPlaylist(playlistExpected);
        assertNotNull(playlist);
+       assertEquals(playlist.getPlaylistName(), playlistExpected.getPlaylistName());
     }
 
     @Test
@@ -54,5 +55,6 @@ class PlaylistServiceTest {
 
         assertEquals(1, playlistService.addSongToPlayList("workout", "It is good"));
     }
+
 
 }
