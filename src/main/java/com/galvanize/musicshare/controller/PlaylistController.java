@@ -3,6 +3,7 @@ package com.galvanize.musicshare.controller;
 import com.galvanize.musicshare.entity.Playlist;
 import com.galvanize.musicshare.service.PlaylistService;
 
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1/playlist")
 @AllArgsConstructor
+@Api(tags = "playlist")
 public class PlaylistController {
 
     private PlaylistService playlistService;
