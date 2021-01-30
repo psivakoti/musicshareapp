@@ -1,6 +1,8 @@
 package com.galvanize.musicshare.controller;
 
 import com.galvanize.musicshare.entity.Playlist;
+import com.galvanize.musicshare.service.PlaylistService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +18,8 @@ public class PlaylistController {
     private PlaylistService playlistService;
 
     @PostMapping
-    public Playlist createPlaylist(){
-        Playlist playlist = new Playlist();
-        playlist.setPlaylistName("My Playlist");
-        return playlist;
+    public Playlist createPlaylist() {
+        return new Playlist();
     }
 
     @PutMapping("/{playlistName}/song/{songName}")
