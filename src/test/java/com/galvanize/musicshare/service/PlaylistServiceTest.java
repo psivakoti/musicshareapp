@@ -1,27 +1,26 @@
 package com.galvanize.musicshare.service;
-
 import com.galvanize.musicshare.entity.Playlist;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@WebMvcTest
 class PlaylistServiceTest {
-    @Autowired
-    private MockMvc mockMvc;
 
     @InjectMocks
     private PlaylistService playlistService;
 
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
+
     @Test
-    private void createPlaylist_Success() {
+    public void createPlaylist_Success() {
         Playlist playlist = playlistService.createPlaylist();
-        assertNotEquals(1,2);
+       assertNotNull(playlist);
     }
 
 }
