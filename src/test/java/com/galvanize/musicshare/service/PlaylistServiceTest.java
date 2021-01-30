@@ -1,5 +1,6 @@
 package com.galvanize.musicshare.service;
 
+import com.galvanize.musicshare.entity.Playlist;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,13 @@ class PlaylistServiceTest {
     @Autowired
     private MockMvc mockMvc;
 
-    //@InjectMocks
-
+    @InjectMocks
+    private PlaylistService playlistService;
 
     @Test
     private void createPlaylist_Success() {
-
+        Playlist playlist = playlistService.createPlaylist();
+        assertNotEquals(1,2);
     }
 
 }
