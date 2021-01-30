@@ -31,5 +31,7 @@ public class PlaylistService {
     }
 
     public void removeSongFromPlaylist(String playListName, String songName) {
+        PlaylistSongMapping entity = playlistSongMappingRepository.findByPlaylistNameAndSongName(playListName,songName);
+        playlistSongMappingRepository.delete(entity);
     }
 }
