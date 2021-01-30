@@ -26,9 +26,7 @@ public class PlaylistService {
         return playlistSongMappingRepository.findByPlaylistName(playListName).size();
     }
 
-    public Playlist createPlaylist(String name) {
-        Playlist playlist = new Playlist();
-        playlist.setPlaylistName(name);
+    public Playlist createPlaylist(Playlist playlist) {
         return playlistRepository.save(playlist);
     }
 

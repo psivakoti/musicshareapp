@@ -2,13 +2,13 @@ package com.galvanize.musicshare.controller;
 
 import com.galvanize.musicshare.entity.Playlist;
 import com.galvanize.musicshare.service.PlaylistService;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.galvanize.musicshare.service.PlaylistService;
+
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +19,14 @@ public class PlaylistController {
 
     private PlaylistService playlistService;
 
-    @PostMapping("/{name}")
-    public Playlist createPlaylist(@PathVariable String name) {
-        return playlistService.createPlaylist(name);
+    @PostMapping
+    public ResponseEntity<Object> createPlaylist(@RequestBody Playlist playlist) {
+
+        if(null != playlist.getPlaylistName()){
+            return new ResponseEntity<>(playlistService.createPlaylist(playlist), HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>("Playlist name required", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{playlistName}/song/{songName}")
