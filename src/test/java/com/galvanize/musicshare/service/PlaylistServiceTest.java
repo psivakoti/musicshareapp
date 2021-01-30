@@ -5,9 +5,7 @@ import com.galvanize.musicshare.repository.PlaylistRepository;
 import com.galvanize.musicshare.repository.PlaylistSongMappingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PlaylistServiceTest {
 
@@ -28,6 +26,9 @@ class PlaylistServiceTest {
 
     @Mock
     PlaylistRepository playlistRepository;
+
+    @Captor
+    private ArgumentCaptor<PlaylistSongMapping> deleteArgs;
 
     @BeforeEach
     void setUp() {
@@ -56,5 +57,16 @@ class PlaylistServiceTest {
         assertEquals(1, playlistService.addSongToPlayList("workout", "It is good"));
     }
 
+    @Test
+    public void removeSongFromPlayList() {
+        PlaylistSongMapping playlistSongMapping = PlaylistSongMapping.builder().playlistName("playlist1").songName("test").build();
+        when(playlistSongMappingRepository.findByPlaylistNameAndSongName(anyString(),anyString())).thenReturn(playlistSongMapping);
+        doNothing().when(playlistSongMappingRepository).delete(any(PlaylistSongMapping.class));
+        playlistService.removeSongFromPlaylist("playlist1","test");
+        verify(playlistSongMappingRepository).delete(deleteArgs.capture());
 
+        PlaylistSongMapping args = deleteArgs.getValue();
+       assertEquals("playlist1",args.getPlaylistName());
+       assertEquals("test",args.getSongName());
+    }
 }

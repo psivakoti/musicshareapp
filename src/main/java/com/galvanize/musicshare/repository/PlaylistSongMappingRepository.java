@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface PlaylistSongMappingRepository extends JpaRepository<PlaylistSongMapping, Long> {
     List<PlaylistSongMapping> findByPlaylistName(String anyString);
+   PlaylistSongMapping findByPlaylistNameAndSongName(String playlistName, String songName);
 }

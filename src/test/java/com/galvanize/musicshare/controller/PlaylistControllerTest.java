@@ -1,7 +1,8 @@
 package com.galvanize.musicshare.controller;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.galvanize.musicshare.entity.Playlist;
+import com.galvanize.musicshare.entity.PlaylistSongMapping;
+import com.galvanize.musicshare.repository.PlaylistSongMappingRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,9 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,6 +24,8 @@ public class PlaylistControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private PlaylistSongMappingRepository playlistSongMappingRepository;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -54,9 +59,17 @@ public class PlaylistControllerTest {
 
         mockMvc.perform(
                 post("/api/v1/playlist/")
-                .content(objectMapper.writeValueAsString(playlist))
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(objectMapper.writeValueAsString(playlist))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Playlist name required"));
+    }
+
+    @Test
+    public void removeSongFromPlaylist_return204() throws Exception {
+        playlistSongMappingRepository.save(PlaylistSongMapping.builder().playlistName("workout1").songName("test").build());
+        mockMvc.perform(delete("/api/v1/playlist/{playlistName}/song/{songName}", "workout1", "test"))
+                .andExpect(status().isNoContent());
+
     }
 }
