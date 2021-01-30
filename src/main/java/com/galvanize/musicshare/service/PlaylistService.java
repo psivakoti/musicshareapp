@@ -24,4 +24,7 @@ public class PlaylistService {
     public Playlist createPlaylist() {
         return new Playlist();
     }
+
+    public void removeSongFromPlaylist(String playListName, String songName) {
+    }
 }
