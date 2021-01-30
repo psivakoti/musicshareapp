@@ -21,6 +21,7 @@ public class PlaylistControllerTest {
     public void createPlaylistReturnsEmptyList() throws Exception {
         mockMvc.perform(
                 post("/api/v1/playlist"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isEmpty());
     }
 }
