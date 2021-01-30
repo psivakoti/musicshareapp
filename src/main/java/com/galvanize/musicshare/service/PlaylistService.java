@@ -2,13 +2,18 @@ package com.galvanize.musicshare.service;
 
 import com.galvanize.musicshare.entity.Playlist;
 import com.galvanize.musicshare.entity.PlaylistSongMapping;
+import com.galvanize.musicshare.repository.PlaylistRepository;
 import com.galvanize.musicshare.repository.PlaylistSongMappingRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class PlaylistService {
+
+    @Autowired
+    private PlaylistRepository playlistRepository;
 
     private PlaylistSongMappingRepository playlistSongMappingRepository;
 
@@ -21,8 +26,10 @@ public class PlaylistService {
         return playlistSongMappingRepository.findByPlaylistName(playListName).size();
     }
 
-    public Playlist createPlaylist() {
-        return new Playlist();
+    public Playlist createPlaylist(String name) {
+        Playlist playlist = new Playlist();
+        playlist.setPlaylistName(name);
+        return playlistRepository.save(playlist);
     }
 
     public void removeSongFromPlaylist(String playListName, String songName) {
